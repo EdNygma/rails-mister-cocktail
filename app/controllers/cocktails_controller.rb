@@ -1,4 +1,5 @@
 class CocktailsController < ApplicationController
+
   def index
     @cocktails = Cocktail.all
   end
@@ -11,6 +12,18 @@ class CocktailsController < ApplicationController
     @cocktail = Cocktail.new
   end
 
-  def edit
+  def create     
+    @cocktail = Cocktail.new(cocktails_params)
+    if @cocktail.save
+      redirect_to cocktail_path(@cocktail)
+    else
+      render :new     
+    end
+  end
+
+  private
+
+  def cocktails_params
+    params.require(:cocktail).permit(:name)
   end
 end
